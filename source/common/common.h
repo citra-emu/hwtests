@@ -25,8 +25,8 @@ private:
     NonCopyable& operator=(NonCopyable& other);
 };
 
-#include "common_types.h"
-#include "common_funcs.h"
+#include "common/common_types.h"
+#include "common/common_funcs.h"
 
 #ifdef __APPLE__
 // The Darwin ABI requires that stack frames be aligned to 16-byte boundaries.

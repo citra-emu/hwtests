@@ -8,7 +8,7 @@
 #include <type_traits>
 #include <utility>
 
-#include "bit_field.h"
+#include "common/bit_field.h"
 
 // All the constants in this file come from http://3dbrew.org/wiki/Error_codes
 

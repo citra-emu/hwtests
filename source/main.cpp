@@ -4,12 +4,13 @@
 #include "tests/test.h"
 #include "tests/fs/fs.h"
 #include "tests/cpu/cputests.h"
+#include "tests/cfg/cfg.h"
 #include "tests/kernel/kernel.h"
 
 static unsigned int test_counter = 0;
 static TestCaller tests[] = {
     FS::TestAll,
-    CPU::Integer::TestAll,
+    Cfg::TestAll,
     CPU::Memory::TestAll,
     Kernel::TestAll,
 };
@@ -17,6 +18,7 @@ static TestCaller tests[] = {
 int main(int argc, char** argv)
 {
     gfxInitDefault();
+    initCfgu();
     InitOutput();
 
     ClearScreens();
@@ -45,8 +47,8 @@ int main(int argc, char** argv)
         gspWaitForEvent(GSPEVENT_VBlank0, false);
     }
 
-    ClearScreens();
-    
+    clearScreens();
+    exitCfgu();
     gfxExit();
     DeinitOutput();
 	
