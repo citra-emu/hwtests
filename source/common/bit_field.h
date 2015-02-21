@@ -35,7 +35,9 @@
 #include <limits>
 #include <type_traits>
 
-#include "common/common.h"
+#ifndef _WIN32
+#define __forceinline inline __attribute__((always_inline))
+#endif
 
 /*
  * Abstract bitfield class
