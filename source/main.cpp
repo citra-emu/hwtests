@@ -11,6 +11,7 @@ static unsigned int test_counter = 0;
 static TestCaller tests[] = {
     FS::TestAll,
     Cfg::TestAll,
+    CPU::Integer::TestAll,
     CPU::Memory::TestAll,
     Kernel::TestAll,
 };
@@ -18,8 +19,8 @@ static TestCaller tests[] = {
 int main(int argc, char** argv)
 {
     gfxInitDefault();
-    initCfgu();
     InitOutput();
+    initCfgu();
 
     ClearScreens();
     Print(GFX_TOP, "Press A to begin...\n");
@@ -47,10 +48,11 @@ int main(int argc, char** argv)
         gspWaitForEvent(GSPEVENT_VBlank0, false);
     }
 
-    clearScreens();
+    ClearScreens();
+    
     exitCfgu();
     gfxExit();
     DeinitOutput();
-	
+
     return 0;
 }

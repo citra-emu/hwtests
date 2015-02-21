@@ -1,7 +1,7 @@
 #include <array>
 #include <3ds.h>
 
-#include "result.h"
+#include "common/result.h"
 #include "output.h"
 #include "tests/test.h"
 #include "tests/cfg/cfg.h"
@@ -59,8 +59,9 @@ namespace Cfg {
 
     void TestAll()
     {
-        Test("Cfg", "TestCfgBlockNotFoundRC", &TestCfgBlockNotFoundRC);
-        Test("Cfg", "TestCfgBlockWrongSizeRC", &TestCfgBlockWrongSizeRC);
+        const std::string tag = "Cfg";
+        Test(tag, "TestCfgBlockNotFoundRC", TestCfgBlockNotFoundRC(), true);
+        Test(tag, "TestCfgBlockWrongSizeRC", TestCfgBlockWrongSizeRC(), true);
         // TODO: Add test for wrong flag
     }
 
