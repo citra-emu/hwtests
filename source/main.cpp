@@ -4,11 +4,13 @@
 #include "tests/test.h"
 #include "tests/fs/fs.h"
 #include "tests/cpu/cputests.h"
+#include "tests/cfg/cfg.h"
 #include "tests/kernel/kernel.h"
 
 static unsigned int test_counter = 0;
 static TestCaller tests[] = {
     FS::TestAll,
+    Cfg::TestAll,
     CPU::Integer::TestAll,
     CPU::Memory::TestAll,
     Kernel::TestAll,
@@ -18,6 +20,7 @@ int main(int argc, char** argv)
 {
     gfxInitDefault();
     InitOutput();
+    initCfgu();
 
     ClearScreens();
     Print(GFX_TOP, "Press A to begin...\n");
@@ -47,8 +50,9 @@ int main(int argc, char** argv)
 
     ClearScreens();
     
+    exitCfgu();
     gfxExit();
     DeinitOutput();
-	
+
     return 0;
 }

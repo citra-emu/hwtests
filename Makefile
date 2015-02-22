@@ -19,7 +19,7 @@ include $(DEVKITARM)/3ds_rules
 #---------------------------------------------------------------------------------
 export TARGET		:=	$(shell basename $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	source source/common source/tests source/tests/fs source/tests/cpu source/tests/kernel
+SOURCES		:=	source source/common source/tests source/tests/fs source/tests/cpu source/tests/kernel source/tests/cfg
 DATA		:=	data
 INCLUDES	:=	source #include
 
