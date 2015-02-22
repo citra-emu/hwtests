@@ -37,10 +37,8 @@ namespace Cfg {
         std::array<u8, size> outData;
 
         Result result = CFGU_GetConfigInfoBlk2(size, blkID, &outData[0]);
-
-        if ((u32)result != RC_BAD_ID.raw)
-            return false;
-
+        SoftAssert((u32)result == RC_BAD_ID.raw);
+        
         return true;
     }
 
@@ -50,9 +48,7 @@ namespace Cfg {
         std::array<u8, size> outData;
 
         Result result = CFGU_GetConfigInfoBlk2(size, blkID, &outData[0]);
-
-        if ((u32)result != RC_BAD_SIZE.raw)
-            return false;
+        SoftAssert((u32)result == RC_BAD_SIZE.raw);
 
         return true;
     }
