@@ -25,6 +25,7 @@ enum PixelFormat {
 enum Flags {
     LINEAR_TO_TILED = 1 << 1,
     RAW_COPY = 1 << 3,
+    NO_SWIZZLE = 1 << 5,
     UNKNOWN1 = 1 << 16,
     HORIZONTAL_DOWNSCALE = 1 << 24,
     DOUBLE_DOWNSCALE = 1 << 25,
@@ -599,11 +600,6 @@ static bool Test_ZCurve(u32* input, u32* output) {
     input[13] = 0xAAAAAA;
     *output = 0;
     DisplayTransferAndWait(input, output, Dimensions(0x80, 0x80), Dimensions(0x80, 0x80), IN_RGBA8 | OUT_RGBA8);
-    for (int i = 0; i < 0x4000; ++i) {
-        if (output[i] != 0) {
-            Log(Common::FormatString("ZC: Found %04X - %08X\n", i, output[i]));
-        }
-    }
     TestEquals(output[0 * 0x80 + 1], (u32)0xABCDEu);
     TestEquals(output[1 * 0x80 + 0], (u32)0xDEF00u);
     TestEquals(output[2 * 0x80 + 3], (u32)0xAAAAAA);
@@ -632,14 +628,38 @@ static bool Test_Flags_Bit_16(u32* input, u32* output) {
     *output = 0;
     // Test bit 16, seems to do nothing?
     DisplayTransferAndWait(input, output, Dimensions(0x80, 0x80), Dimensions(0x80, 0x80), IN_RGBA8 | OUT_RGBA8 | UNKNOWN1);
-    for (int i = 0; i < 0x4000; ++i) {
-        if (output[i] != 0) {
-            Log(Common::FormatString("TestBits16: Found %04X - %08X\n", i, output[i]));
-        }
-    }
     TestEquals(output[0 * 0x80 + 1], (u32)0xABCDEu);
     TestEquals(output[1 * 0x80 + 0], (u32)0xDEF00u);
     TestEquals(output[2 * 0x80 + 3], (u32)0xAAAAAA);
+    return true;
+}
+
+static bool Test_Flags_Bit_5(u32* input, u32* output) {
+    memset(output, 0, 0x4000 * 4);
+    memset(input, 0, 0x4000 * 4);
+
+    input[1] = 0xABCDE;
+    input[2] = 0xDEF00;
+    input[13] = 0xAAAAAA;
+    // Bit 5 leaves the output in the same swizzle order as the input
+    DisplayTransferAndWait(input, output, Dimensions(0x80, 0x80), Dimensions(0x80, 0x80), IN_RGBA8 | OUT_RGBA8 | NO_SWIZZLE);
+    
+    TestEquals(output[1], (u32)0xABCDEu);
+    TestEquals(output[2], (u32)0xDEF00u);
+    TestEquals(output[13], (u32)0xAAAAAA);
+    
+    memset(output, 0, 0x4000 * 4);
+    memset(input, 0, 0x4000 * 4);
+
+    input[1] = 0xABCDE;
+    input[2] = 0xDEF00;
+    input[13] = 0xAAAAAA;
+    // Bit 5 leaves the output in the same swizzle order as the input
+    DisplayTransferAndWait(input, output, Dimensions(0x80, 0x80), Dimensions(0x80, 0x80), IN_RGBA8 | OUT_RGBA8 | NO_SWIZZLE | LINEAR_TO_TILED);
+    
+    TestEquals(output[1], (u32)0xABCDEu);
+    TestEquals(output[2], (u32)0xDEF00u);
+    TestEquals(output[13], (u32)0xAAAAAA);
     return true;
 }
 
@@ -701,6 +721,7 @@ void TestAll() {
     Test(tag, "Test_ZCurve", Test_ZCurve(input, output), true);
     Test(tag, "Test_Raw_Copy", Test_Raw_Copy(input, output), true);
     Test(tag, "Test_Flags_Bit_16", Test_Flags_Bit_16(input, output), true);
+    Test(tag, "Test_Flags_Bit_5", Test_Flags_Bit_5(input, output), true);
 
     linearFree(input);
     linearFree(output);
