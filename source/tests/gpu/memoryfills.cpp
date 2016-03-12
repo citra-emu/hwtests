@@ -11,13 +11,13 @@ namespace MemoryFills {
 
 static void FillAndWait(u8* buffer, u32 value, u32 size, u32 control, bool first_engine = true) {
     if (first_engine) {
-        GX_SetMemoryFill(nullptr, (u32*)buffer, value, (u32*)(buffer + size), control, 0, 0, 0, 0);
+        GX_MemoryFill((u32*)buffer, value, (u32*)(buffer + size), control, 0, 0, 0, 0);
         gspWaitForPSC0();
     } else {
-        GX_SetMemoryFill(nullptr, 0, 0, 0, control, (u32*)buffer, value, (u32*)(buffer + size), control);
+        GX_MemoryFill(0, 0, 0, control, (u32*)buffer, value, (u32*)(buffer + size), control);
         gspWaitForPSC1();
     }
-    GSPGPU_InvalidateDataCache(nullptr, buffer, size);
+    GSPGPU_InvalidateDataCache(buffer, size);
 }
 
 static bool Fill32Bits(u8* buffer) {
