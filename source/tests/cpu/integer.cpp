@@ -115,6 +115,9 @@ static bool Qadd16()
 // QSUB16
 static bool Qsub16()
 {
+    //Setting .ltorg directive to get this file to compile.
+    asm volatile(".ltorg");
+
     int output = 0;
     int rm = std::numeric_limits<short>::min();
     int rn = std::numeric_limits<short>::min();

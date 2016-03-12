@@ -45,7 +45,7 @@ int main(int argc, char** argv)
             Print("Press A to continue...\n");
         }
 
-        gspWaitForEvent(GSPEVENT_VBlank0, false);
+        gspWaitForVBlank();
     }
 
     consoleClear();
