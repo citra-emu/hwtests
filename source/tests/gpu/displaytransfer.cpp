@@ -547,6 +547,16 @@ static bool RGBA8_To_RGBA8_Scaled_Blending(u32* input, u32* output) {
     DisplayTransferAndWait(input, output, Dimensions(0x80, 0x80), Dimensions(0x80, 0x80), IN_RGBA8 | OUT_RGBA8 | DOUBLE_DOWNSCALE);
     input[1] = 0;
     TestEquals(*output, (u32)0x7F3F003F); // Blends 4 adjacent pixels together
+
+    // Double downscale, but in linear, which blends four horizontal pixels instead of a square.
+    *input = 0xFF000000; //Input
+    input[1] = 0xFFFF0000;
+    input[2] = 0xFFFFFF00; //Input
+    input[3] = 0xFFFFFFFF;
+    *output = 0; //Output
+    DisplayTransferAndWait(input, output, Dimensions(0x80, 0x80), Dimensions(0x80, 0x80), IN_RGBA8 | OUT_RGBA8 | DOUBLE_DOWNSCALE);
+    input[1] = 0;
+    TestEquals(*output, (u32)0xFFBF7F3F); // Blends 4 linear pixels together
     return true;
 }
 
