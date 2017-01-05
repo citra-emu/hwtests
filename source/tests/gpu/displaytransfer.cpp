@@ -45,8 +45,8 @@ union Dimensions {
 };
 
 static void DisplayTransferAndWait(u32* input, u32* output, Dimensions input_dimensions, Dimensions output_dimensions, u32 flags) {
-    GSPGPU_FlushDataCache(input, sizeof(u32));
-    GSPGPU_InvalidateDataCache(output, sizeof(u32));
+    GSPGPU_FlushDataCache(input, 0x4000 * sizeof(u32));
+    GSPGPU_InvalidateDataCache(output, 0x4000 * sizeof(u32));
     Result res = GX_DisplayTransfer(input, input_dimensions.raw, output, output_dimensions.raw, flags);
     if ((u32)res != 0) {
         Log(Common::FormatString("Something went wrong: %u\n", (u32)res));
