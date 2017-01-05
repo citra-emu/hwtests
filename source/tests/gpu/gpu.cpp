@@ -6,9 +6,6 @@
 namespace GPU {
 
 void TestAll() {
-    // Initialize GPU
-    GPU_Init(nullptr);
-
     DisplayTransfer::TestAll();
     MemoryFills::TestAll();
 }

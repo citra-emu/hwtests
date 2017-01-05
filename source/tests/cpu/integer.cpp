@@ -55,9 +55,9 @@ static bool Sub() {
     unsigned int output;
 
     // Generic subtraction.
-    asm volatile ("LDR r0, =489\n"
+    asm volatile ("MOV r0, #488\n"
                   "SUB %[out], r0, #69" : [out] "=r"(output));
-    if (output != 420)
+    if (output != 419)
         return false;
 
     // Subtract overflow (0 - 1).
