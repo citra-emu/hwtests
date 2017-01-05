@@ -30,9 +30,6 @@ static bool Fill32Bits(u8* buffer) {
     TestEquals(buffer[5], 0xFFu);
     TestEquals(buffer[6], 0xFFu);
     TestEquals(buffer[7], 0x00u);
-    TestEquals(buffer[48], 0x00u);
-    TestEquals(buffer[49], 0x00u);
-    TestEquals(buffer[49], 0x00u);
 
     FillAndWait(buffer, 0x0000FFFF, 48, 0x201, false);
     TestEquals(buffer[0], 0xFFu);
@@ -57,9 +54,6 @@ static bool Fill24Bits(u8* buffer) {
     TestEquals(buffer[5], 0xFFu);
     TestEquals(buffer[6], 0xFFu);
     TestEquals(buffer[7], 0xFFu);
-    TestEquals(buffer[48], 0x00u);
-    TestEquals(buffer[49], 0x00u);
-    TestEquals(buffer[49], 0x00u);
 
     FillAndWait(buffer, 0xFFFFFFFF, 48, 0x101);
     TestEquals(buffer[0], 0xFFu);
