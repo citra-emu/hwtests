@@ -1077,10 +1077,10 @@ bool Test_WaitSynch_KernelType_AddressArbiter() {
 }
 
 void TestAll() {
-    svcCreateEvent(&events[0], 1);
-    svcCreateEvent(&events[1], 1);
-    svcCreateEvent(&events[2], 1);
-    svcCreateEvent(&events[3], 1);
+    svcCreateEvent(&events[0], RESET_STICKY);
+    svcCreateEvent(&events[1], RESET_STICKY);
+    svcCreateEvent(&events[2], RESET_STICKY);
+    svcCreateEvent(&events[3], RESET_STICKY);
 
     svcCreateMutex(&mutexes[0], false);
     svcCreateMutex(&mutexes[1], false);
